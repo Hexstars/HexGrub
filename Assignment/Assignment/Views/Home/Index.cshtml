@@ -1,0 +1,10 @@
+﻿@{
+    ViewData["Title"] = "Trang Chủ";
+    var categories = ViewData["Categories"] as IEnumerable<Assignment.Models.Category>;
+    var products = ViewData["Products"] as IEnumerable<Assignment.Models.Product>;
+}
+
+<div class="homepage-content">
+    @Html.Partial("_CategoryView", categories)
+    @Html.Partial("_ProductView", products)
+</div>
