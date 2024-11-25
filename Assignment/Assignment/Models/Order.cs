@@ -24,7 +24,7 @@ namespace Assignment.Models
         [Required(ErrorMessage = "Bạn cần chọn mã người dùng.")]
         
         public int AccountId { get; set; }// Foreign Key đến Account
-        public Account Account { get; set; }
+        public virtual Account Account { get; set; }
 
         [Display(Name = "Ngày đặt")]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy HH:mm:ss}")]
@@ -35,6 +35,6 @@ namespace Assignment.Models
         [Display(Name = "Trạng thái")]
         public OrderStatus Status { get; set; }  // Trạng thái đơn hàng (enum)
 
-        public ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>(); // Danh sách các OrderDetail
+        public virtual ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>(); // Danh sách các OrderDetail
     }
 }

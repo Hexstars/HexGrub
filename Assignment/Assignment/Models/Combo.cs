@@ -20,6 +20,6 @@ namespace Assignment.Models
         public string? Image { get; set; }
 
         // Tạo mối quan hệ nhiều-nhiều
-        public ICollection<ComboDetail> ComboDetails { get; set; } = new List<ComboDetail>();
+        public virtual ICollection<ComboDetail> ComboDetails { get; set; } = new List<ComboDetail>();
     }
 }

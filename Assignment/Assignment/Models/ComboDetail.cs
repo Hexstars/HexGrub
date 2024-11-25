@@ -7,13 +7,13 @@ namespace Assignment.Models
         [Required(ErrorMessage = "Bạn cần chọn mã combo.")]
         [Display(Name = "Mã combo")]
         public int ComboId { get; set; }
-        public Combo? Combo { get; set; }  // Khóa ngoại tham chiếu đến bảng Combo
+        public virtual Combo? Combo { get; set; }  // Khóa ngoại tham chiếu đến bảng Combo
 
 
         [Required(ErrorMessage = "Bạn cần chọn mã sản phẩm.")]
         [Display(Name = "Mã sản phẩm")]
         public int ProductId { get; set; }
-        public Product? Product { get; set; }  // Khóa ngoại tham chiếu đến bảng Product
+        public virtual Product? Product { get; set; }  // Khóa ngoại tham chiếu đến bảng Product
 
         [Display(Name = "Số lượng")]
         [Required(ErrorMessage = "Bạn cần nhập số lượng.")]

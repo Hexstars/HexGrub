@@ -27,7 +27,7 @@
                             <a class="product-item" style="text-decoration:none;" asp-controller="Product" asp-action="ProductDetail" asp-route-id="@product.ProductId">
                                 <figure>
                                     <a title="@product.ProductName" asp-controller="Product" asp-action="ProductDetail" asp-route-id="@product.ProductId">
-                                        <img style="width: 210px; height: 210px;" src="~/images/Products/@product.Image" alt="@product.ProductName" class="tab-image">
+										<img style="width: 210px; height: 210px;" src="~/images/Products/@(product.Image)" alt="@product.ProductName" class="tab-image">
                                     </a>
                                 </figure>
                                 <div class="d-flex flex-column text-center">

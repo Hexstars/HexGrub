@@ -14,6 +14,8 @@ namespace Assignment.Models
         [Display(Name = "Hình ảnh")]
         public string Image { get; set; }
 
-        public List<string> ProductName { get; set; }
+
+        //Lưu các sản phẩm của combo
+        public List<Product> Products { get; set; } = new List<Product>();
     }
 }

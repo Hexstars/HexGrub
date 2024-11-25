@@ -1,14 +1,24 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Assignment.Helpers;
+using Assignment.Models;
+using Assignment.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Assignment.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class RoleController : Controller
     {
+        private IRoleSvc _roleSvc;
+
+        public RoleController(IRoleSvc roleSvc)
+        {
+            _roleSvc = roleSvc;
+        }
         // GET: RoleController
         public ActionResult Index()
         {
-            return View();
+            return View(_roleSvc.GetAllRole());
         }
 
         // GET: RoleController/Details/5
@@ -26,11 +36,19 @@ namespace Assignment.Areas.Admin.Controllers
         // POST: RoleController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(Role role)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                if (ModelState.IsValid)
+                {
+                    _roleSvc.AddRole(role);
+                    return RedirectToAction(nameof(Details), new { id = role.RoleId });
+                }
+                else 
+                {
+                    return View();
+                }
             }
             catch
             {

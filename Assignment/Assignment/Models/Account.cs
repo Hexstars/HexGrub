@@ -53,8 +53,8 @@ namespace Assignment.Models
 		public Role? Role { get; set; } //Dùng để đi vào bảng Role để truy vấn các trường khác
 
         // Thêm thuộc tính Orders để biểu diễn mối quan hệ với đơn hàng
-        public ICollection<Order> Orders { get; set; } = new List<Order>(); // Mối quan hệ một-nhiều
-        public ICollection<Cart> Carts { get; set; } = new List<Cart>();
+        public virtual ICollection<Order> Orders { get; set; } = new List<Order>(); // Mối quan hệ một-nhiều
+        public virtual ICollection<Cart> Carts { get; set; } = new List<Cart>();
 
     }
 }

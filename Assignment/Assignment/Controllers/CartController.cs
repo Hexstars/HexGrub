@@ -16,7 +16,16 @@ namespace Assignment.Controllers
         }
         public ActionResult Index()
         {
-            return View();
+            // Check if the user is authenticated
+            if (!User.Identity.IsAuthenticated)
+            {
+                // Save the current URL to redirect back after login
+                string returnUrl = Request.GetEncodedUrl(); // Correct way to get the full URL in ASP.NET Core
+
+                // Redirect to the login page, passing the return URL
+                return RedirectToAction("Login", "Account", new { returnUrl });
+            }
+            return View(_cartSvc.GetAllProduct(Convert.ToInt32(User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value)));
         }
 
         [HttpPost]
@@ -34,7 +43,7 @@ namespace Assignment.Controllers
             }
             else
             {
-                Cart cart = _cartSvc.GetCart(Convert.ToInt32(@User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)));
+                Cart cart = _cartSvc.GetUserCart(Convert.ToInt32(User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value));
                 bool added = _cartDetailSvc.AddToCart(cart, product, Quantity);
 
                 if (added)
@@ -45,7 +54,7 @@ namespace Assignment.Controllers
                 {
                     TempData["Info"] = "THÊM VÀO GIỎ HÀNG THẤT BẠI";
                 }
-                return RedirectToAction("ProductDetail", new { id = product.ProductId });//Giống bên Index
+                return RedirectToAction("ProductDetail", "Product", new { id = product.ProductId });//Giống bên Index
             }
         }
     }

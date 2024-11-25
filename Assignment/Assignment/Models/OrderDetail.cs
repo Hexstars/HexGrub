@@ -9,14 +9,14 @@ namespace Assignment.Models
         [Required(ErrorMessage = "Bạn cần chọn mã đơn hàng.")]
         
         public int OrderId { get; set; }  // Foreign Key đến Order
-        public Order Order { get; set; }
+        public virtual Order Order { get; set; }
 
 
         [Display(Name = "Mã sản phẩm")]
         [Required(ErrorMessage = "Bạn cần chọn mã sản phẩm.")]
         
         public int ProductId { get; set; }  // Foreign Key đến Product
-        public Product Product { get; set; }
+        public virtual Product Product { get; set; }
 
         [Display(Name = "Số lượng")]
         [Required(ErrorMessage = "Bạn cần nhập số lượng.")]

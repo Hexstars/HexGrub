@@ -28,6 +28,6 @@ namespace Assignment.Models
 
 
         //Navigation property to link back to Products (one-to-many relationship)
-        public ICollection<Product> Products { get; set; } = new List<Product>();
+        public virtual ICollection<Product> Products { get; set; } = new List<Product>();
     }
 }

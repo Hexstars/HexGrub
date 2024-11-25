@@ -41,13 +41,13 @@ namespace Assignment.Models
 		[Display(Name = "Phân loại")]
         [Required(ErrorMessage = "Bạn cần chọn loại.")]
 		public int CategoryId { get; set; }  // Foreign Key
-        public Category? Category { get; set; } //Dùng để đi vào bảng Role để truy vấn các trường khác
+        public virtual Category? Category { get; set; } //Dùng để đi vào bảng Role để truy vấn các trường khác
 
 
         // Tạo mối quan hệ nhiều-nhiều
-        public ICollection<ComboDetail> ComboDetails { get; set; } = new List<ComboDetail>();
+        public virtual ICollection<ComboDetail> ComboDetails { get; set; } = new List<ComboDetail>();
 
-        public ICollection<CartDetail> CartDetails { get; set; } = new List<CartDetail>();
+        public virtual ICollection<CartDetail> CartDetails { get; set; } = new List<CartDetail>();
 
         public ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
     }

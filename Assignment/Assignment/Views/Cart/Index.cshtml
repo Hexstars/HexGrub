@@ -35,7 +35,7 @@
 				grandTotal += item.Total;
 				<tr>
 					<td>
-						<img asp-append-version="true" src="~/images/Product/@(item.Image)" width="50px" />
+						<img asp-append-version="true" src="~/images/Products/@(item.Image)" width="50px" />
 					</td>
 					<td>
 						@Html.DisplayFor(modelItem => item.ProductName)
@@ -45,7 +45,7 @@
 					</td>
 					<td>
 						<form asp-action="Edit" method="post" style="display: flex; align-items: center;">
-							@Html.Hidden("productId", item.ProductId)
+							@Html.Hidden("id", item.ProductId)
 							@Html.TextBox("newQuantity", item.Quantity, new { @class = "form-control", type = "number", min = "1", max = "10", style = "width: 60px;" })
 							<button type="submit" class="btn btn-primary" style="margin-left: 5px;">Cập nhật</button>
 						</form>
@@ -55,14 +55,20 @@
 					</td>
 					<td>
 						<form asp-action="Delete" method="post" style="display: flex; align-items: center;">
-							@Html.Hidden("productId", item.ProductId)
+							@Html.Hidden("id", item.ProductId)
 							<button type="submit" class="btn btn-primary" style="margin-left: 5px;">Xóa</button>
+						</form>
+					</td>
+					<td>
+						<form asp-action="ProductDetail" asp-controller="Product" style="display: flex; align-items: center;">
+							@Html.Hidden("id", item.ProductId)
+							<button type="submit" class="btn btn-primary" style="margin-left: 5px;">Xem chi tiết</button>
 						</form>
 					</td>
 				</tr>
 			}
 			<tr>
-				<td style="font-weight:bold">Thành tiền</td>
+				<td style="font-weight:bold"><h3>Thành tiền</h3></td>
 				<td></td>
 				<td></td>
 				<td></td>

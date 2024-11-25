@@ -16,6 +16,6 @@ namespace Assignment.Models
 
 		//Navigation property to link back to Accounts (one-to-many relationship)
 		//Khi lấy Role thì lấy hết Accounts
-		public ICollection<Account> Accounts { get; set; } = new List<Account>();
+		public virtual ICollection<Account> Accounts { get; set; } = new List<Account>();
 	}
 }
