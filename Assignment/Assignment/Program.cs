@@ -14,12 +14,22 @@ builder.Services.AddDbContext<DataContext>(options =>
 
 builder.Services.AddTransient<IProductSvc, ProductSvc>();
 
+builder.Services.AddTransient<ICategorySvc, CategorySvc>();
+
+builder.Services.AddTransient<ICartSvc, CartSvc>();
+
+builder.Services.AddTransient<ICartDetailSvc, CartDetailSvc>();
+
+builder.Services.AddTransient<IRoleSvc, RoleSvc>();
+
 builder.Services.AddTransient<IUploadHelper, UploadHelper>();
+
+builder.Services.AddTransient<IEncryptionHelper, EncryptionHelper>();
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
 	.AddCookie(x =>
 	{
-		x.LoginPath = "/Admin/Products/Index";
+		x.LoginPath = "/Login/Index";
 		x.AccessDeniedPath = "/Admin/Account/AccessDenied"; // trỏ đến action accessdenied
 		x.ExpireTimeSpan = TimeSpan.FromMinutes(20);
 		x.SlidingExpiration = true; //Làm mới cookie mỗi request

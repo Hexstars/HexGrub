@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Assignment.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20241122033225_CreateDB")]
+    [Migration("20241124050618_CreateDB")]
     partial class CreateDB
     {
         /// <inheritdoc />
@@ -223,8 +223,8 @@ namespace Assignment.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Image")
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
 
                     b.Property<string>("ProductName")
                         .IsRequired()

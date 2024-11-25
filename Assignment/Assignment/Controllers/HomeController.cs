@@ -1,4 +1,6 @@
+using Assignment.Helpers;
 using Assignment.Models;
+using Assignment.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
@@ -7,18 +9,19 @@ namespace Assignment.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-        private readonly DataContext _context;
-        public HomeController(ILogger<HomeController> logger, DataContext context)
+        private IProductSvc _productSvc;
+        private ICategorySvc _categorySvc;
+
+        public HomeController(IProductSvc productSvc, ICategorySvc categorySvc)
         {
-            _logger = logger;
-            _context = context;
+            _productSvc = productSvc;
+            _categorySvc = categorySvc;
         }
 
         public async Task<IActionResult> Index()
         {
-            var categories = _context.Categories.ToList();
-            var products = _context.Products.ToList(); // Example: Top 10 products
+            var categories = _categorySvc.GetAllCategory();
+            var products = _productSvc.GetAllProduct(); // Example: Top 10 products
 
             ViewData["Categories"] = categories;
             ViewData["Products"] = products;

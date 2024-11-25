@@ -5,10 +5,10 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<h1>SẢN PHẨM</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">THÊM MỚI</a>
 </p>
 <table class="table">
     <thead>
@@ -44,15 +44,15 @@
                 @Html.DisplayFor(modelItem => item.Quantity)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Image)
+                <img src="~/images/Products/@(item.Image)" width="150px" />
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Category.CategoryName)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.ProductId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ProductId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ProductId">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.ProductId">CHỈNH SỬA</a> |
+                <a asp-action="Details" asp-route-id="@item.ProductId">CHI TIẾT</a> |
+                @* <a asp-action="Delete" asp-route-id="@item.ProductId">Delete</a> *@
             </td>
         </tr>
 }

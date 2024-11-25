@@ -88,15 +88,15 @@ namespace Assignment.Models
 
 
         }
-		public DbSet<Account> Accounts { get; set; }
-		public DbSet<Role> Roles { get; set; }
-		public DbSet<Product> Products { get; set; }
-		public DbSet<Category> Categories { get; set; }
-		public DbSet<Combo> Combos { get; set; }
-		public DbSet<ComboDetail> ComboDetails { get; set; }
-        public DbSet<Cart> Carts { get; set; }
-        public DbSet<CartDetail> CartDetails { get; set; }
-	    public DbSet<Assignment.Models.Order> Order { get; set; } = default!;
-
+		public virtual DbSet<Account> Accounts { get; set; }
+		public virtual DbSet<Role> Roles { get; set; }
+        public virtual DbSet<Product> Products { get; set; }
+        public virtual DbSet<Category> Categories { get; set; }
+        public virtual DbSet<Combo> Combos { get; set; }
+        public virtual DbSet<ComboDetail> ComboDetails { get; set; }
+        public virtual DbSet<Cart> Carts { get; set; }
+        public virtual DbSet<CartDetail> CartDetails { get; set; }
+        public virtual DbSet<Order> Orders { get; set; }
+        public virtual DbSet<OrderDetail> OrderDetails { get; set; }
     }
 }

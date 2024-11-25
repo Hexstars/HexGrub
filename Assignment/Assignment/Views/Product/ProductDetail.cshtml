@@ -1,0 +1,50 @@
+﻿@model Product
+
+@{
+    ViewData["Title"] = "Product Detail";
+}
+
+<div class="container my-5">
+
+    <!-- Product Detail Section -->
+    <div class="row justify-content-center">
+        <!-- Product Image Column -->
+        <div class="col-md-6 mb-4">
+            <img src="@Url.Content("~/images/Products/" + Model.Image)" class="img-fluid rounded" alt="@Model.ProductName" style="object-fit: cover; width: 100%; height: 100%;">
+        </div>
+
+        <!-- Product Details Column -->
+        <div class="col-md-6 mb-4">
+            <div class="p-4">
+                <!-- Product Name -->
+                <h2 class="text-primary fw-bold">@Model.ProductName</h2>
+
+                <!-- Product Price -->
+                <p class="mt-3">
+                    <strong>GIÁ:</strong>
+                    <span class="text-success">@Model.UnitPrice.ToString("C", new System.Globalization.CultureInfo("vi-VN"))</span>
+                </p>
+
+                <!-- Add to Cart Section -->
+                <div class="mt-4">
+                    <form asp-controller="Cart" asp-action="AddToCart" method="post" class="d-flex align-items-center">
+                        <input type="hidden" name="ProductId" value="@Model.ProductId" />
+
+                        <label for="Quantity" class="me-3"><strong>SỐ LƯỢNG:</strong></label>
+                        <input type="number" name="Quantity" id="Quantity" class="form-control w-25 me-3" value="1" max="10" min="1" />
+
+                        <button type="submit" class="btn btn-success">
+                            <i class="bi bi-cart-plus me-2"></i> THÊM VÀO GIỎ HÀNG
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Additional Info (if any) -->
+                @if (TempData["Info"] != null)
+                {
+                    <p class="text-danger mt-3">@TempData["Info"]</p>
+                }
+            </div>
+        </div>
+    </div>
+</div>

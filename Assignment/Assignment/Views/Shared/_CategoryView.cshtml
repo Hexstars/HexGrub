@@ -23,7 +23,7 @@
 						@foreach (var category in Model)
 						{
 							<a class="nav-link swiper-slide text-center" style="text-decoration:none; cursor: pointer" asp-controller="Product" asp-action="MoreFromCategory" asp-route-id="@category.CategoryId">
-								<img style="width: 161px; height: 160px;" src="images/Categories/@category.Image" class="rounded-circle" alt="Category Thumbnail">
+								<img style="width: 161px; height: 160px;" src="~/images/Categories/@category.Image" class="rounded-circle" alt="Category Thumbnail">
 								<h4 class="fs-6 mt-3 fw-normal category-title">@category.CategoryName</h4>
 							</a>
 						}

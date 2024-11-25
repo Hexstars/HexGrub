@@ -28,7 +28,7 @@ namespace Assignment.Models
 		public int Quantity { get; set; }
 
 
-		[StringLength(200)]
+		[StringLength(250)]
         [Display(Name = "Hình")]
 		public string? Image { get; set; }
 

@@ -22,10 +22,9 @@ namespace Assignment.Models
         public string? Image { get; set; }
 
 
-        //[NotMapped]
-        //[Required(ErrorMessage = "Bạn cần chọn hình.")]
-        //[Display(Name = "Chọn hình")]
-        //public IFormFile ImageFile { get; set; }
+        [NotMapped]
+        [Display(Name = "Chọn hình")]
+        public IFormFile ImageFile { get; set; }
 
 
         //Navigation property to link back to Products (one-to-many relationship)
