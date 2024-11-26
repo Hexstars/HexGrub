@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Assignment.Models;
 
 namespace Assignment.Models
 {

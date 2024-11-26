@@ -6,7 +6,7 @@ namespace Assignment.Services
     {
         //List<Account> GetAllAccount();
 
-        //Account GetAccount(int id);
+        Account GetAccount(int id);
 
         //int AddAccount(Account account);
 
@@ -19,6 +19,13 @@ namespace Assignment.Services
         public AccountSvc(DataContext context)
         {
             _context = context;
+        }
+
+        public Account GetAccount(int id) 
+        {
+            Account account = null;
+            account = _context.Accounts.Find(id);
+            return account;
         }
     }
 }

@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Http.Extensions;
+using Assignment.Services;
 
 namespace Assignment.Controllers
 {
@@ -11,10 +13,11 @@ namespace Assignment.Controllers
     {
         private readonly DataContext _context;
         public const string CookieEmail = "EmailLogin";
-
-        public AccountController(DataContext context)
+        public IAccountSvc _accountSvc;
+        public AccountController(DataContext context, IAccountSvc accountSvc)
         {
             _context = context;
+            _accountSvc = accountSvc;
         }
         public IActionResult Index()
         {
@@ -67,16 +70,17 @@ namespace Assignment.Controllers
 
             // Kiểm tra cookie tồn tại hay không?
             string? emailLogined = Request.Cookies.ContainsKey(CookieEmail) ? Request.Cookies[CookieEmail] : null;
-
+            string session = HttpContext.Session.GetString("email");
             //Nếu session hết hạn thì xóa cookie?
 
 
 
             // Kiểm tra nếu session đã hết hạn
-            if (emailLogined != null)
+            if (/*emailLogined != null*/session != null)
             {
                 var user = _context.Accounts
-                           .FirstOrDefault(u => u.Email == emailLogined);
+                    .Include(u => u.Role)  // Ensure Role is loaded along with the User
+                    .FirstOrDefault(u => u.Email == session);
 
                 if (user != null)
                 {
@@ -176,6 +180,20 @@ namespace Assignment.Controllers
 
             var login = HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Login");
+        }
+
+        public IActionResult Info()
+        {
+            if (!User.Identity.IsAuthenticated)
+            {
+                // Save the current URL to redirect back after login
+                string returnUrl = Request.GetEncodedUrl(); // Correct way to get the full URL in ASP.NET Core
+
+                // Redirect to the login page, passing the return URL
+                return RedirectToAction("Login", "Account", new { returnUrl });
+            }
+            var account = _accountSvc.GetAccount(Convert.ToInt32(User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value));
+            return View(account);
         }
     }
 }

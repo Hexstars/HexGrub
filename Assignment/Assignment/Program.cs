@@ -12,6 +12,8 @@ builder.Services.AddDbContext<DataContext>(options =>
 	options.UseSqlServer(builder.Configuration.GetConnectionString("SQLConnection"))
 	);
 
+builder.Services.AddTransient<IAccountSvc, AccountSvc>();
+
 builder.Services.AddTransient<IProductSvc, ProductSvc>();
 
 builder.Services.AddTransient<ICategorySvc, CategorySvc>();
