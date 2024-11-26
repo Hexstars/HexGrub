@@ -12,6 +12,8 @@ namespace Assignment.Services
 
         List<CartProduct> GetAllProduct(int id); //Hiển thị giỏ hàng
 
+        Task<bool> RemoveAll(int id);
+
     }
     public class CartSvc : ICartSvc
     {
@@ -63,6 +65,27 @@ namespace Assignment.Services
                                     Quantity = cd.Quantity
                                 }).ToList();
             return cartProducts;
+        }
+
+        public async Task<bool> RemoveAll(int CartId)
+        {
+            try
+            {
+                // Find all items in the cart
+                var cartDetails = _context.CartDetails.Where(cd => cd.CartId == CartId).ToList();
+
+                // Remove all items
+                _context.CartDetails.RemoveRange(cartDetails);
+
+                // Save changes to the database
+                await _context.SaveChangesAsync();
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }

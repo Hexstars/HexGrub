@@ -20,6 +20,8 @@ builder.Services.AddTransient<ICategorySvc, CategorySvc>();
 
 builder.Services.AddTransient<ICartSvc, CartSvc>();
 
+builder.Services.AddTransient<IOrderSvc, OrderSvc>();
+
 builder.Services.AddTransient<ICartDetailSvc, CartDetailSvc>();
 
 builder.Services.AddTransient<IRoleSvc, RoleSvc>();

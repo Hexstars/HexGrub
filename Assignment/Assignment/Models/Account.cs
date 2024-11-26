@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Assignment.Models
@@ -10,6 +11,7 @@ namespace Assignment.Models
 
 		[Required]
 		[RegularExpression("^[a-zA-Z0-9_\\.-]+@[a-zA-Z0-9-]+(\\.[a-zA-Z]{2,})+$", ErrorMessage = "Email không hợp lệ")]
+		//[Remote("")]
 		public string Email { get; set; }
 
 		[Display(Name = "Mật khẩu")]

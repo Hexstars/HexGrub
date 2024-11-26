@@ -21,7 +21,7 @@ namespace Assignment.Controllers
         public async Task<IActionResult> Index()
         {
             var categories = _categorySvc.GetAllCategory();
-            var products = _productSvc.GetAllProduct(); // Example: Top 10 products
+            var products = _productSvc.GetAllProduct();
 
             ViewData["Categories"] = categories;
             ViewData["Products"] = products;

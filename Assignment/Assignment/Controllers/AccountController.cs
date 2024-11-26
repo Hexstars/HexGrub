@@ -25,6 +25,11 @@ namespace Assignment.Controllers
         }
         public IActionResult Register()
         {
+            string session = HttpContext.Session.GetString("email");
+            if (session != null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
         [HttpPost]

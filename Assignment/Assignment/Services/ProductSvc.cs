@@ -1,4 +1,5 @@
 ﻿using Assignment.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Assignment.Services
 {
@@ -24,7 +25,7 @@ namespace Assignment.Services
         public List<Product> GetAllProduct() 
         {
             List<Product> list = new List<Product>();
-            list = _context.Products.ToList();
+            list = _context.Products.Include(p => p.Category).ToList();
             return list;
         }
 
