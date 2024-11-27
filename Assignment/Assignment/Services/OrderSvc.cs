@@ -7,6 +7,7 @@ namespace Assignment.Services
     {
         //List<OrderView> GetAllOrders();
         Task<bool> CreateOrder(Order order);
+        bool UpdateOrder(int orderId, int userId, int status);
         Task<List<CartProduct>> GetAllProduct(int id);
         Task<bool> AddIntoDetail(List<CartProduct> products, int userId);
         List<OrderView> GetAllOrders(int userId);
@@ -42,6 +43,34 @@ namespace Assignment.Services
             return await _context.Orders
                          .Where(o => o.AccountId == userId) //
                          .ToListAsync(); // Trả query
+        }
+        public bool UpdateOrder(int orderId, int userId, int status)
+        {
+            try
+            {
+                // Tìm đơn hàng cần cập nhật
+                var order = _context.Orders
+                    .FirstOrDefault(o => o.OrderId == orderId && o.AccountId == userId);
+
+                // Nếu không tìm thấy đơn hàng
+                if (order == null)
+                {
+                    return false;
+                }
+
+                // Cập nhật trạng thái đơn hàng
+                order.Status = (OrderStatus)status;
+
+                // Cập nhật vào cơ sở dữ liệu
+                _context.Orders.Update(order); // Gọi Update để thông báo EF thay đổi
+                _context.SaveChanges(); // Lưu thay đổi
+
+                return true; // Thành công
+            }
+            catch
+            {
+                return false;
+            }
         }
         public List<OrderView> GetAllOrders(int userId)
         {

@@ -81,11 +81,11 @@ namespace Assignment.Controllers
 
 
             // Kiểm tra nếu session đã hết hạn
-            if (/*emailLogined != null*/session != null)
+            if (emailLogined != null/*session != null*/)
             {
                 var user = _context.Accounts
                     .Include(u => u.Role)  // Ensure Role is loaded along with the User
-                    .FirstOrDefault(u => u.Email == session);
+                    .FirstOrDefault(u => u.Email == emailLogined);
 
                 if (user != null)
                 {

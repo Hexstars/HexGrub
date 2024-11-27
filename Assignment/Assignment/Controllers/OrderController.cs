@@ -74,5 +74,28 @@ namespace Assignment.Controllers
             }
             return RedirectToAction("Index", "Cart");
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CancelOrder(int id)
+        {
+            // Check if the user is authenticated
+            if (!User.Identity.IsAuthenticated)
+            {
+                // Save the current URL to redirect back after login
+                string returnUrl = Request.GetEncodedUrl(); // Correct way to get the full URL in ASP.NET Core
+
+                // Redirect to the login page, passing the return URL
+                return RedirectToAction("Login", "Account", new { returnUrl });
+            }
+            else
+            {
+                int userId = Convert.ToInt32(User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value);
+                //add order
+                bool result = _orderSvc.UpdateOrder(id, userId, 3);
+
+            }
+            return RedirectToAction("Index");
+        }
     }
 }

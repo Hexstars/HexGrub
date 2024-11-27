@@ -9,12 +9,18 @@
 		<h2>MÃ ĐƠN HÀNG: @order.OrderId</h2>
 		<p>NGÀY ĐẶT HÀNG: @order.OrderDate.ToString("dd/MM/yyyy HH:mm:ss tt")</p>
 		<p>TỔNG THÀNH TIỀN: @order.Total VNĐ</p>
-		<p>TRẠNG THÁI: @EnumHelper.GetDisplayName(order.Status)</p>
+		@if (order.Status == OrderStatus.Cancelled)
+		{
+			<p>TRẠNG THÁI: <span style="color: red">@EnumHelper.GetDisplayName(order.Status)</span></p>
+		}
+		else{
+			<p>TRẠNG THÁI: @EnumHelper.GetDisplayName(order.Status)</p>
+		}
 		<p>SỐ ĐIỆN THOẠI: @order.Phone </p>
 		<p>ĐỊA CHỈ NHẬN HÀNG: @order.Address</p>
 
-		<table>
-			<thead>
+		<table border="1">
+			<thead style="text-align: center">
 				<tr>
 					<th>TÊN SẢN PHẨM</th>
 					<th>HÌNH ẢNH</th>
@@ -23,7 +29,7 @@
 					<th>THÀNH TIỀN</th>
 				</tr>
 			</thead>
-			<tbody>
+			<tbody style="text-align: center">
 				@foreach (var product in order.Products)
 				{
 					<tr>
@@ -36,6 +42,16 @@
 				}
 			</tbody>
 		</table>
+		@if (order.Status != OrderStatus.Cancelled)
+		{
+			<div style="display: flex; justify-content: flex-end; align-items: center; margin-top: 10px;">
+				<form asp-action="CancelOrder" style="display: inline-flex; align-items: center;">
+					@Html.Hidden("id", order.OrderId)
+					<button type="submit" class="btn btn-danger" style="margin-left: 5px;">Hủy đơn hàng</button>
+				</form>
+			</div>
+		}
+		<hr style="border: 3px solid black; margin: 20px 0;" />
 	}
 }
 else
