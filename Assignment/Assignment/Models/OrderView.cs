@@ -17,6 +17,8 @@ namespace Assignment.Models
     {
         public int OrderId { get; set; }
         public DateTime OrderDate { get; set; }
+        public string Phone { get; set; }
+        public string Address { get; set; }
         public List<OrderProductView> Products { get; set; } = new List<OrderProductView>(); // Danh sách sản phẩm
         public decimal Total => Products.Sum(p => p.SubTotal); // Tổng tiền của cả đơn hàng
         public OrderStatus Status { get; set; }

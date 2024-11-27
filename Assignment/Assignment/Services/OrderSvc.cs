@@ -52,6 +52,8 @@ namespace Assignment.Services
                           {
                               OrderId = o.OrderId,
                               OrderDate = o.OrderDate,
+                              Phone = o.Phone,
+                              Address = o.Address,
                               Status = o.Status,
                               Products = (from od in _context.OrderDetails //Query tất cả sản phẩm ở chi tiết đơn hàng và gán vào list OrderProductView
                                           join p in _context.Products on od.ProductId equals p.ProductId
