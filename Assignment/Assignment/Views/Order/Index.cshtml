@@ -1,14 +1,15 @@
-﻿@model List<Assignment.Models.OrderView>
+﻿@using Assignment.Helpers
+@model List<Assignment.Models.OrderView>
 
 <h1>DANH SÁCH ĐƠN HÀNG</h1>
 @if (Model.Count() != 0)
 {
 	@foreach (var order in Model)
 	{
-		<h2>Mã đơn hàng: @order.OrderId</h2>
-		<p>Ngày đặt hàng: @order.OrderDate</p>
-		<p>Tổng thành tiền: @order.Total</p>
-		<p>Trạng thái: @order.Status</p>
+		<h2>MÃ ĐƠN HÀNG: @order.OrderId</h2>
+		<p>NGÀY ĐẶT HÀNG: @order.OrderDate.ToString("dd/MM/yyyy HH:mm:ss tt")</p>
+		<p>TỔNG THÀNH TIỀN: @order.Total VNĐ</p>
+		<p>TRẠNG THÁI: @EnumHelper.GetDisplayName(order.Status)</p>
 
 		<table>
 			<thead>
@@ -26,7 +27,7 @@
 					<tr>
 						<td>@product.ProductName</td>
 						<td><img src="~/images/Products/@(product.Image)" alt="@product.ProductName" width="150" /></td>
-						<td>@product.UnitPrice</td>
+						<td>@product.UnitPrice VNĐ</td>
 						<td>@product.Quantity</td>
 						<td>@product.SubTotal</td>
 					</tr>
