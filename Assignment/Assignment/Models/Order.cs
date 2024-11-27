@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Assignment.Models
 {
@@ -30,6 +31,19 @@ namespace Assignment.Models
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy HH:mm:ss}")]
         [Required(ErrorMessage = "Bạn cần chọn ngày.")]
         public DateTime OrderDate { get; set; }
+
+        [Display(Name = "Số điện thoại")]
+        [StringLength(15)]
+        [Column(TypeName = "varchar(15)")]
+        [Required(ErrorMessage = "Bạn cần nhập số điện thoại.")]
+        public string Phone { get; set; }
+
+
+        [Display(Name = "Địa chỉ")]
+        [StringLength(100)]
+        [Column(TypeName = "nvarchar(100)")]
+        [Required(ErrorMessage = "Bạn cần nhập họ địa chỉ.")]
+        public string Address { get; set; }
 
 
         [Display(Name = "Trạng thái")]

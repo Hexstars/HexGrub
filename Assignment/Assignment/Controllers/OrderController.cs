@@ -20,7 +20,8 @@ namespace Assignment.Controllers
         }
         public ActionResult Index()
         {
-            return View();
+            var orders = _orderSvc.GetAllOrders(Convert.ToInt32(User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value));
+            return View(orders);
         }
         public async Task<ActionResult> CreateOrder()
         {
@@ -43,6 +44,8 @@ namespace Assignment.Controllers
                 {
                     AccountId = user.AccountId,
                     OrderDate = DateTime.Now,
+                    Phone = user.Phone,
+                    Address = user.Address,
                     Status = 0,
                 };
                 
