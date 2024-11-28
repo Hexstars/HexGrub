@@ -11,9 +11,14 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit" enctype="multipart/form-data">
+        <form id="update" asp-action="Edit" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="ProductId" />
+            <div class="form-group" style="display: none;">
+                <label asp-for="ProductId" class="control-label"></label>
+                <input asp-for="ProductId" class="form-control" />
+                <span asp-validation-for="ProductId" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <label asp-for="ProductName" class="control-label"></label>
                 <input asp-for="ProductName" class="form-control" />
@@ -47,7 +52,7 @@
                 <span asp-validation-for="CategoryId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" id="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
     </div>
@@ -59,4 +64,43 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+            $("#submit").click(function (e) {
+            e.preventDefault();
+
+            //Lấy data từ form (gọi id)
+            var data = $('#update').serialize();
+            $.ajax(
+                {
+                    type: "PUT",
+                    url: "/Admin/Product/Edit",
+                    data: data,
+                    headers: {
+                        'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val() //Dùng cho [ValidateAntiForgeryToken]
+                    },
+
+                    //Thông báo
+                    success: function (response) {
+                        if (response.success) {
+                            // Nếu thành công
+                            if (response.redirectToUrl) {
+                                window.location.href = response.redirectToUrl;
+                            }
+
+
+                            // if (response.redirectToUrl) {
+                            //     window.location.href = response.redirectToUrl;
+                            // } else {
+                            //     alert("Cập nhật thành công.");
+                            // }
+                        }
+                        else {
+                            // Nếu thất bại
+                            alert("Cập nhật thất bại.");
+                        }
+                }
+            });
+        })
+    </script>
 }

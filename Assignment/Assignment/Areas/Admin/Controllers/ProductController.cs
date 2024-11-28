@@ -17,9 +17,11 @@ namespace Assignment.Areas.Admin.Controllers
         private IProductSvc _productSvc;
         private ICategorySvc _categorySvc;
         private IUploadHelper _uploadHelper;
+        private DataContext _context;
 
-        public ProductController(IWebHostEnvironment webHostEnvironment, IProductSvc productSvc, ICategorySvc categorySvc, IUploadHelper uploadHelper)
+        public ProductController(IWebHostEnvironment webHostEnvironment, IProductSvc productSvc, ICategorySvc categorySvc, IUploadHelper uploadHelper, DataContext context)
         {
+            _context = context;
             _webHostEnvironment = webHostEnvironment;
             _productSvc = productSvc;
             _categorySvc = categorySvc;
@@ -77,14 +79,24 @@ namespace Assignment.Areas.Admin.Controllers
         // GET: ProductController/Edit/5
         public ActionResult Edit(int id)
         {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
             var product = _productSvc.GetProduct(id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+            ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "CategoryName", product.CategoryId);
             return View(product);
         }
 
         // POST: ProductController/Edit/5
-        [HttpPost]
+        [HttpPut]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, Product product)
+        public ActionResult Edit(Product product)
         {
             try
             {
@@ -100,8 +112,10 @@ namespace Assignment.Areas.Admin.Controllers
                             product.Image = product.ImageFile.FileName;
                         }
                     }
-                    _productSvc.EditProduct(id, product);
-                    return RedirectToAction(nameof(Details), new { id = product.ProductId });
+                    _productSvc.EditProduct(product.ProductId ,product);
+                    //return RedirectToAction(nameof(Details), new { id = product.ProductId });
+                    return Json(new { success = true, redirectToUrl = Url.Action("Index", "Product") });
+
                 }
             }
             catch

@@ -35,7 +35,7 @@ namespace Assignment.Models
 
 		[NotMapped]
 		[Display(Name = "Chọn hình")]
-		public IFormFile ImageFile { get; set; }
+		public IFormFile? ImageFile { get; set; }
 
 
 		[Display(Name = "Phân loại")]
