@@ -43,11 +43,9 @@ namespace Assignment.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Login(string email, string password, int Remember)
+        public async Task<IActionResult> Login(string email, string password, int Remember)
         {
-
             //Check the user name and password
-            //Here can be implemented checking logic from the database
             ClaimsIdentity identity = null;
             bool isAuthenticated = false;
 
@@ -55,17 +53,16 @@ namespace Assignment.Areas.Admin.Controllers
 
             if (user != null)
             {
-
                 HttpContext.Session.SetString("email", user.Email);
                 HttpContext.Session.SetString("userId", user.AccountId.ToString());
                 HttpContext.Session.SetString("role", user.Role.RoleName);
 
-                //Create the identity for the user
+                // Create the identity for the user
                 identity = new ClaimsIdentity(new[] {
-                            new Claim(ClaimTypes.Name, user.FullName),
-                            new Claim(ClaimTypes.NameIdentifier, user.AccountId.ToString()),
-                            new Claim(ClaimTypes.Role, user.Role.RoleName)
-                        }, CookieAuthenticationDefaults.AuthenticationScheme);
+            new Claim(ClaimTypes.Name, user.FullName),
+            new Claim(ClaimTypes.NameIdentifier, user.AccountId.ToString()),
+            new Claim(ClaimTypes.Role, user.Role.RoleName)
+        }, CookieAuthenticationDefaults.AuthenticationScheme);
 
                 isAuthenticated = true;
             }
@@ -74,13 +71,21 @@ namespace Assignment.Areas.Admin.Controllers
                 ViewBag.Info = "Đăng nhập thất bại!";
                 return View();
             }
+
             if (isAuthenticated)
             {
                 var principal = new ClaimsPrincipal(identity);
 
-                var login = HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+                var authProperties = new AuthenticationProperties
+                {
+                    IsPersistent = Remember == 1, // If Remember is 1, make the login persistent
+                    ExpiresUtc = DateTimeOffset.UtcNow.AddDays(7)  // Optional: Set the cookie expiration
+                };
 
-                if (User.IsInRole("Admin"))
+                // Sign in the user
+                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, authProperties);
+
+                if (!User.IsInRole("Admin"))
                 {
                     return RedirectToAction("Index", "Account");
                 }
@@ -95,6 +100,8 @@ namespace Assignment.Areas.Admin.Controllers
             }
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Logout()
         {
             //Xóa cookie

@@ -1,4 +1,5 @@
 ﻿using Assignment.Models;
+using Microsoft.CodeAnalysis;
 
 namespace Assignment.Services
 {
@@ -13,6 +14,8 @@ namespace Assignment.Services
         List<CartProduct> GetAllProduct(int id); //Hiển thị giỏ hàng
 
         Task<bool> RemoveAll(int id);
+
+        bool UpdateQuantity(int userId, int productId, int newQuantity);
 
     }
     public class CartSvc : ICartSvc
@@ -80,6 +83,34 @@ namespace Assignment.Services
                 // Save changes to the database
                 await _context.SaveChangesAsync();
 
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+        public bool UpdateQuantity(int userId, int productId, int newQuantity)
+        {
+            try
+            {
+                var cart = GetUserCart(userId);
+
+                if (cart == null)
+                {
+                    return false; // Giỏ hàng không tồn tại
+                }
+                // Find all items in the cart
+                var cartProduct = _context.CartDetails.FirstOrDefault(cd => cd.CartId == cart.CartId && cd.ProductId == productId);
+
+                if (cartProduct == null)
+                {
+                    return false; // Sản phẩm không có trong giỏ hàng
+                }
+                cartProduct.Quantity = newQuantity;
+
+                _context.Update(cartProduct);
+                _context.SaveChanges();
                 return true;
             }
             catch

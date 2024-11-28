@@ -111,7 +111,6 @@ namespace Assignment.Areas.Admin.Controllers
                     {
                         AccountId = model.AccountId,
                         Email = model.Email,
-                        Password = model.Password,
                         FullName = model.FullName,
                         Phone = model.Phone,
                         Address = model.Address,

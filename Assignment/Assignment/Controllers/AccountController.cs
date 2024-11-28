@@ -50,8 +50,7 @@ namespace Assignment.Controllers
                 else
                 {
                     // Add account
-                    _context.Accounts.Add(user);
-                    _context.SaveChanges();  // lưu
+                    _accountSvc.AddAccount(user);
 
                     // tạo cart
                     var cart = new Cart

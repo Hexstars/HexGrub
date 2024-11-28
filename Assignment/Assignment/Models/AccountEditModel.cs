@@ -13,13 +13,6 @@ namespace Assignment.Models
         public string Email { get; set; }
 
 
-        [Display(Name = "Mật khẩu")]
-        [StringLength(50)]
-        [Required(ErrorMessage = "Bạn cần nhập mật khẩu.")]
-        [DataType(DataType.Password)]
-        public string Password { get; set; }
-
-
         [Display(Name = "Họ và tên")]
         [StringLength(100)]
         [Required(ErrorMessage = "Bạn cần nhập họ và tên.")]

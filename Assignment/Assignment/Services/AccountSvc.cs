@@ -29,6 +29,12 @@ namespace Assignment.Services
         {
             var u = _context.Accounts.Where(
                 a => a.Email.Equals(email)).Include(u => u.Role).FirstOrDefault();
+            if (u == null)
+            {
+                return null;
+            }
+
+
             bool validPass = _encryptionHelper.VerifyPassword(password, u.Password);
 
             if (u != null && validPass)
@@ -52,7 +58,6 @@ namespace Assignment.Services
             {
                 AccountId = account.AccountId,
                 Email = account.Email,
-                Password = account.Password,
                 FullName = account.FullName,
                 Phone = account.Phone,
                 Address = account.Address,
@@ -70,6 +75,16 @@ namespace Assignment.Services
 
                 _context.Add(account);
                 _context.SaveChanges();
+
+                // tạo cart
+                var cart = new Cart
+                {
+                    AccountId = account.AccountId  // set Id
+                };
+
+                // Add cart
+                _context.Carts.Add(cart);
+                _context.SaveChanges();  //lưu
                 ret = account.AccountId;
             }
             catch
