@@ -37,8 +37,8 @@ namespace Assignment.Models
 
 		[Display(Name = "Số điện thoại")]
 		[StringLength(15)]
-		[Column(TypeName = "varchar(15)")]
 		[Required(ErrorMessage = "Bạn cần nhập số điện thoại.")]
+		[Column(TypeName = "varchar(15)")]
 		public string Phone { get; set; }
 
 

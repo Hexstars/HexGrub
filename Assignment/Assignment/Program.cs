@@ -33,8 +33,8 @@ builder.Services.AddTransient<IEncryptionHelper, EncryptionHelper>();
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
 	.AddCookie(x =>
 	{
-		x.LoginPath = "/Login/Index";
-		x.AccessDeniedPath = "/Admin/Account/AccessDenied"; // trỏ đến action accessdenied
+		x.LoginPath = "/Admin/Login/Login";
+		x.AccessDeniedPath = "/Admin/Login/AccessDenied"; // trỏ đến action accessdenied
 		x.ExpireTimeSpan = TimeSpan.FromMinutes(20);
 		x.SlidingExpiration = true; //Làm mới cookie mỗi request
 		x.Cookie.HttpOnly = true; // Cookie chỉ tương tác được ở server

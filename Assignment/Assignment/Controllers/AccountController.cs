@@ -120,8 +120,7 @@ namespace Assignment.Controllers
             ClaimsIdentity identity = null;
             bool isAuthenticated = false;
 
-            var user = _context.Accounts.Include(u => u.Role)  // Lấy luôn role
-                           .FirstOrDefault(u => u.Email == email && u.Password == password);
+            var user = _accountSvc.Login(email, password);
             if (user != null)
             {
 
@@ -168,10 +167,9 @@ namespace Assignment.Controllers
                 return View();
             }
         }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Logout()
+        public ActionResult Logout()
         {
             //Xóa cookie
             if (Request.Cookies.ContainsKey(CookieEmail))

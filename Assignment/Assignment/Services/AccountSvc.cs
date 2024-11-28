@@ -1,31 +1,113 @@
-﻿using Assignment.Models;
+﻿using Assignment.Helpers;
+using Assignment.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Assignment.Services
 {
     public interface IAccountSvc
     {
-        //List<Account> GetAllAccount();
+        Account Login(string email, string password);
+        List<Account> GetAllAccount();
 
-        Account GetAccount(int id);
+        AccountEditModel GetAccount(int id);
 
-        //int AddAccount(Account account);
+        int AddAccount(Account account);
 
-        //int EditProduct(int id, Account account);
+        int EditAccount(int id, Account account);
     }
     public class AccountSvc: IAccountSvc
     {
         protected DataContext _context;
+        protected IEncryptionHelper _encryptionHelper;
 
-        public AccountSvc(DataContext context)
+        public AccountSvc(DataContext context, IEncryptionHelper encryptionHelper)
         {
             _context = context;
+            _encryptionHelper = encryptionHelper;
+        }
+        public Account Login(string email, string password)
+        {
+            var u = _context.Accounts.Where(
+                a => a.Email.Equals(email)).Include(u => u.Role).FirstOrDefault();
+            bool validPass = _encryptionHelper.VerifyPassword(password, u.Password);
+
+            if (u != null && validPass)
+            {
+                return u;
+            }
+            return null;
+        }
+        public List<Account> GetAllAccount()
+        {
+            List<Account> list = new List<Account>();
+            list = _context.Accounts.Include(p => p.Role).ToList();
+            return list;
         }
 
-        public Account GetAccount(int id) 
+        public AccountEditModel GetAccount(int id) 
         {
             Account account = null;
             account = _context.Accounts.Find(id);
-            return account;
+            AccountEditModel model = new AccountEditModel
+            {
+                AccountId = account.AccountId,
+                Email = account.Email,
+                Password = account.Password,
+                FullName = account.FullName,
+                Phone = account.Phone,
+                Address = account.Address,
+                RoleId = account.RoleId,
+            };
+            return model;
+        }
+
+        public int AddAccount(Account account)
+        {
+            int ret = 0;
+            try
+            {
+                account.Password = _encryptionHelper.EncryptPassword(account.Password);
+
+                _context.Add(account);
+                _context.SaveChanges();
+                ret = account.AccountId;
+            }
+            catch
+            {
+                ret = 0;
+            }
+            return ret;
+        }
+        
+        public int EditAccount(int id, Account account) 
+        {
+            int ret = 0;
+            try
+            {
+                Account _account = null;
+                _account = _context.Accounts.Find(id); //cách này chỉ dùng cho Khóa chính
+
+                _account.Email = account.Email;
+                if (_account.Password != null) 
+                {
+                    account.Password = _encryptionHelper.EncryptPassword(_account.Password);
+                    _account.Password = account.Password;
+                    _account.ConfirmPassword = account.ConfirmPassword;
+                }
+                _account.FullName = account.FullName;
+                _account.Phone = account.Phone;
+                _account.Address = account.Address;
+                _account.RoleId = account.RoleId;
+
+                _context.Update(_account);
+                _context.SaveChanges();
+                ret = account.AccountId;
+            }
+            catch
+            {
+                ret = 0;
+            }
+            return ret;
         }
     }
 }
