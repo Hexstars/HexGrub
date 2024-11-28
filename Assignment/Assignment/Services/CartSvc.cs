@@ -16,6 +16,7 @@ namespace Assignment.Services
         Task<bool> RemoveAll(int id);
 
         bool UpdateQuantity(int userId, int productId, int newQuantity);
+        bool DeleteFromCart(int userId, int productId);
 
     }
     public class CartSvc : ICartSvc
@@ -110,6 +111,34 @@ namespace Assignment.Services
                 cartProduct.Quantity = newQuantity;
 
                 _context.Update(cartProduct);
+                _context.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public bool DeleteFromCart(int userId, int productId)
+        {
+            try
+            {
+                var cart = GetUserCart(userId);
+
+                if (cart == null)
+                {
+                    return false; // Giỏ hàng không tồn tại
+                }
+                // Find all items in the cart
+                var cartProduct = _context.CartDetails.FirstOrDefault(cd => cd.CartId == cart.CartId && cd.ProductId == productId);
+
+                if (cartProduct == null)
+                {
+                    return false; // Sản phẩm không có trong giỏ hàng
+                }
+                // Remove the product from the cart
+                _context.CartDetails.Remove(cartProduct);
                 _context.SaveChanges();
                 return true;
             }

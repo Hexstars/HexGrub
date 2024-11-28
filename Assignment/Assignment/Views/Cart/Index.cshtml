@@ -54,8 +54,8 @@
 						@Html.DisplayFor(modelItem => item.Total) VNĐ
 					</td>
 					<td>
-						<form asp-action="Delete" method="post" style="display: flex; align-items: center;">
-							@Html.Hidden("id", item.ProductId)
+						<form asp-action="DeleteFromCart" method="post" style="display: flex; align-items: center;">
+							@Html.Hidden("productId", item.ProductId)
 							<button type="submit" class="btn btn-primary" style="margin-left: 5px;">Xóa</button>
 						</form>
 					</td>
