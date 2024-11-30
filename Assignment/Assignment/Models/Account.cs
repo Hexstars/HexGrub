@@ -9,8 +9,8 @@ namespace Assignment.Models
 		[Key]
 		public int AccountId {  get; set; }
 
-		[Required]
-		[RegularExpression("^[a-zA-Z0-9_\\.-]+@[a-zA-Z0-9-]+(\\.[a-zA-Z]{2,})+$", ErrorMessage = "Email không hợp lệ")]
+        [Required(ErrorMessage = "Bạn cần nhập email")]
+        [RegularExpression("^[a-zA-Z0-9_\\.-]+@[a-zA-Z0-9-]+(\\.[a-zA-Z]{2,})+$", ErrorMessage = "Email không hợp lệ")]
 		//[Remote("")]
 		public string Email { get; set; }
 
