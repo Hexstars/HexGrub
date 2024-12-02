@@ -30,7 +30,7 @@ namespace Assignment.Areas.Admin.Controllers
         // GET: ProductController
         public ActionResult Index()
         {
-            return View(_productSvc.GetAllProduct());
+            return View(_productSvc.GetProducts());
         }
 
         // GET: ProductController/Details/5

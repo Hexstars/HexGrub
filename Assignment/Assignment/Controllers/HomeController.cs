@@ -1,4 +1,4 @@
-using Assignment.Helpers;
+﻿using Assignment.Helpers;
 using Assignment.Models;
 using Assignment.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -18,15 +18,24 @@ namespace Assignment.Controllers
             _categorySvc = categorySvc;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int currentPage = 1)
         {
-            var categories = _categorySvc.GetAllCategory();
-            var products = _productSvc.GetAllProduct();
+            int pageSize = 5; // Số sản phẩm trên mỗi trang
 
-            ViewData["Categories"] = categories;
+            var (products, totalCount) = _productSvc.GetAllProduct(currentPage, pageSize);
+
+            // Tính tổng số trang
+            int totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
+
+            // Truyền dữ liệu qua ViewData
+            ViewData["CurrentPage"] = currentPage;
+            ViewData["TotalPages"] = totalPages;
+
+            var categories = _categorySvc.GetAllCategory();
+
             ViewData["Products"] = products;
 
-            return View();
+            return View(categories);
         }
 
         public IActionResult Privacy()

@@ -5,7 +5,9 @@ namespace Assignment.Services
 {
     public interface IProductSvc
     {
-        List<Product> GetAllProduct();
+        List<Product> GetProducts();
+
+        (List<Product> Products, int TotalCount) GetAllProduct(int currentPage, int pageSize);
 
         Product GetProduct(int id);
 
@@ -21,12 +23,26 @@ namespace Assignment.Services
         {
             _context = context;
         }
-
-        public List<Product> GetAllProduct() 
+        public List<Product> GetProducts()
         {
-            List<Product> list = new List<Product>();
-            list = _context.Products.Include(p => p.Category).ToList();
+            var list = _context.Products.Include(p=>p.Category).ToList();
             return list;
+        }
+        public (List<Product> Products, int TotalCount) GetAllProduct(int currentPage, int pageSize)
+        {
+            int pageIndex = currentPage - 1;
+
+            // Đếm tổng số sản phẩm để tính số trang
+            int totalCount = _context.Products.Count();
+
+            // Lấy dữ liệu cho trang hiện tại
+            List<Product> list = _context.Products
+                                        .Include(p => p.Category)
+                                        .Skip(pageIndex * pageSize)
+                                        .Take(pageSize)
+                                        .ToList();
+
+            return (list, totalCount);
         }
 
         public Product GetProduct(int id) 
