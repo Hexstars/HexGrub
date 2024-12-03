@@ -25,7 +25,7 @@ namespace Assignment.Models
         [Required(ErrorMessage = "Bạn cần chọn mã người dùng.")]
         
         public int AccountId { get; set; }// Foreign Key đến Account
-        public virtual Account Account { get; set; }
+        public virtual Account? Account { get; set; }
 
         [Display(Name = "Ngày đặt")]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy HH:mm:ss}")]

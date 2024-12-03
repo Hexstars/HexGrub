@@ -310,6 +310,7 @@
                                     <ul class="dropdown-menu border-0 p-3 rounded-0 shadow" aria-labelledby="pages">
                                         <li><a asp-area="Admin" asp-controller="Product" asp-action="Index" class="dropdown-item">Sản phẩm</a></li>
                                         <li><a asp-area="Admin" asp-controller="Category" asp-action="Index" class="dropdown-item">Danh mục</a></li>
+                                        <li><a asp-area="Admin" asp-controller="Order" asp-action="Index" class="dropdown-item">Đơn hàng</a></li>
                                     </ul>
                                 </li>
                             </ul>
@@ -333,9 +334,9 @@
                                 </a>
                             </li>
                             <li>
-                                <a asp-area="" asp-controller="Login" asp-action="Logout" class="p-2 mx-1" @* data-bs-toggle="offcanvas" data-bs-target="#offcanvasCart" aria-controls="offcanvasCart" *@>
-                                    <i class="fa-solid fa-right-from-bracket"></i>
-                                </a>
+                                <form class="nav-link" asp-action="Logout" asp-controller="Account" asp-area="">
+                                    <button type="submit" class="nav-link btn btn-link" style="padding: 0;">Đăng xuất</button>
+                                </form>
                             </li>
                         </ul>
                     </div>
