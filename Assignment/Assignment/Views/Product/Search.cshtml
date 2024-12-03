@@ -1,0 +1,87 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model IEnumerable<Assignment.Models.Product>
+@{
+    ViewData["Title"] = "Tìm kiếm";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="img/ferret-close-up.jpg">
+    <link rel="stylesheet" href="~/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+          integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        /* Custom Styles for Hover Effects */
+        .card {
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+            .card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            }
+
+        .card-img-container {
+            padding: 10px; /* Add padding to prevent cropping */
+            background-color: #f8f9fa; /* Light background for better contrast */
+            border-radius: 8px; /* Match the card border radius */
+            overflow: hidden;
+            height: 220px; /* Ensures consistent height */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+            .card-img-container img {
+                max-width: 100%;
+                max-height: 100%;
+                object-fit: contain; /* Prevent cropping of images */
+            }
+
+        .card-title {
+            transition: color 0.3s;
+        }
+
+        .card:hover .card-title {
+            color: #007bff; /* Change title color on hover */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container my-5">
+        <!-- Search Results Header -->
+        <h2 class="mb-4">
+            <i style="color: red" class="fa-solid fa-magnifying-glass"></i>
+            Kết quả tìm kiếm: @Model.Count() sản phẩm.
+        </h2>
+
+        <!-- Products Section -->
+        <div class="row g-4">
+            @foreach (var product in Model)
+            {
+                <div class="col-6 col-md-4 col-lg-3">
+                    <!-- Product Card -->
+                    <div class="card h-100 shadow-sm">
+                        <a asp-controller="Product" asp-action="ProductDetail" asp-route-id="@product.ProductId" class="text-decoration-none text-dark">
+                            <div class="card-img-container">
+                                <img src="~/images/Products/@(product.Image)" alt="@product.ProductName">
+                            </div>
+                            <div class="card-body text-center">
+                                <h5 class="card-title text-truncate">@product.ProductName</h5>
+                                <p class="card-text text-danger fw-bold">VNĐ @product.UnitPrice</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</body>
+
+</html>

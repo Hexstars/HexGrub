@@ -52,7 +52,7 @@ namespace Assignment.Models
 		[Display(Name = "Vai trò")]
         //[ForeignKey("RoleId")] dùng nếu khác tên với trường của bảng Role
         public int RoleId { get; set; }  // Foreign Key
-		public Role? Role { get; set; } //Dùng để đi vào bảng Role để truy vấn các trường khác
+		public virtual Role? Role { get; set; } //Dùng để đi vào bảng Role để truy vấn các trường khác
 
         // Thêm thuộc tính Orders để biểu diễn mối quan hệ với đơn hàng
         public virtual ICollection<Order> Orders { get; set; } = new List<Order>(); // Mối quan hệ một-nhiều

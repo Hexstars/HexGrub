@@ -6,7 +6,7 @@ namespace Assignment.Services
     public interface IProductSvc
     {
         List<Product> GetProducts();
-
+        List<Product> Search(string Name);
         (List<Product> Products, int TotalCount) GetAllProduct(int currentPage, int pageSize);
 
         Product GetProduct(int id);
@@ -27,6 +27,14 @@ namespace Assignment.Services
         {
             var list = _context.Products.Include(p=>p.Category).ToList();
             return list;
+        }
+        public List<Product> Search(string Name)
+        {
+            var products = _context.Products
+        .Where(p => p.ProductName.ToLower().Contains(Name.ToLower())) // Convert both to lowercase
+        .ToList();
+
+            return products;
         }
         public (List<Product> Products, int TotalCount) GetAllProduct(int currentPage, int pageSize)
         {
